@@ -13,10 +13,10 @@ export default function NavBar() {
             <Pressable style={styles.button} onPress={() => router.navigate('./start')}>
                 <Text style={styles.buttonText}>Start</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => {}}>
+            <Pressable style={styles.button} onPress={() => router.navigate('./standalonedevicesync')}>
                 <Text style={styles.buttonText}>device sync</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => {}}>
+            <Pressable style={styles.button} onPress={() => router.navigate('./manualacquisition')}>
                 <Text style={styles.buttonText}>acquisition</Text>
             </Pressable>
         </View>

@@ -1,79 +1,101 @@
-import {useState} from 'react';
-import {Text, TextInput, View, StyleSheet, Pressable} from 'react-native';
+import { useState } from 'react';
+import { Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
 import { getCurrentTime } from '@/utils/currenttime';
-import Header from "@/components/header";
-import NavBar from "@/components/navbar";
+import settings from '@/config/settings.json';
 
-export default function Scenario(){
+export default function Scenario() {
     const [startTimer, setStartTimer] = useState(false);
-    const [userId, setUserId] = useState('666');
-    const [room, setRoom] = useState('room1');
-    const [scenario, setScenario] = useState('scenario1');
+    const [userId, setUserId] = useState(settings.user.Id);
+    const [room, setRoom] = useState(settings.room.Id);
+    const [scenario, setScenario] = useState(settings.header.usecase);
     const [iteration, setIteration] = useState(1);
     const currenttime = getCurrentTime();
+    settings.header.date = currenttime;
     const logname = `${currenttime}_${scenario}_${room}_user${userId}_${iteration}`;
     return (
-        <View style={{flex: 1}}>
-        <View style={styles.headerContainer}>
-            <Header startTimer={startTimer}/>
-            <NavBar />
-        </View>
-        {/* <View style={styles.mainContainer}>
+        <View style={{ flex: 1 }}>
+            {/* <View style={styles.headerContainer}> */}
+            {/* <Header startTimer={startTimer}/>
+            <NavBar /> */}
+            {/* </View> */}
+            {/* <View style={styles.mainContainer}>
 
             
         </View> */}
-        <View style={styles.scenarioContainer}>
-            
-            <View style={styles.centerContainer}>
-                <View style={styles.lognameContainer}>
-                    <Text style={styles.lognameText}>{logname}</Text>
-                </View>
-                <View style={styles.informationsContainer}>
-                    <View style={styles.informationContainer}>
-                        <Text style={styles.fieldLabel}>User ID</Text>
-                        <View style={styles.fieldContainer}>
-                            <TextInput style={styles.fieldTextInput} placeholder="User ID" onChangeText={newId => setUserId(newId)} value={userId} placeholderTextColor="#111" />
-                            <Pressable style={styles.infoButton}>
-                                <Text >Info</Text>
-                            </Pressable>
-                        </View>
-                    </View>
-                    <View style={styles.informationContainer}>
+            <View style={styles.scenarioContainer}>
 
-                        <Text style={styles.fieldLabel}>Room</Text>
-                        <View style={styles.fieldContainer}>
-                            <TextInput style={styles.fieldTextInput} placeholder="Room" placeholderTextColor="#111" onChangeText={newRoom => setRoom(newRoom)}/>
-                            <Pressable style={styles.infoButton}> <Text >Info</Text></Pressable>
+                <View style={styles.centerContainer}>
+                    <View style={styles.lognameContainer}>
+                        <Text style={styles.lognameText}>{logname}</Text>
+                    </View>
+                    <View style={styles.informationsContainer}>
+                        <View style={styles.informationContainer}>
+                            <Text style={styles.fieldLabel}>User ID</Text>
+                            <View style={styles.fieldContainer}>
+                                <TextInput style={styles.fieldTextInput}
+                                placeholder="User ID"
+                                onEndEditing={(event) => {
+                                    setUserId(event.nativeEvent.text);
+                                    settings.user.Id = event.nativeEvent.text
+                                    }
+                                }
+                                value={userId}
+                                placeholderTextColor="#111" />
+                                <Pressable style={styles.infoButton}>
+                                    <Text >Info</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+                        <View style={styles.informationContainer}>
+
+                            <Text style={styles.fieldLabel}>Room</Text>
+                            <View style={styles.fieldContainer}>
+                                <TextInput style={styles.fieldTextInput}
+                                placeholder="Room"
+                                placeholderTextColor="#111"
+                                onEndEditing={(event) => { 
+                                    setRoom(event.nativeEvent.text);
+                                    settings.room.Name = event.nativeEvent.text
+                                    }
+                                }
+                                />
+                                <Pressable style={styles.infoButton}> <Text >Info</Text></Pressable>
+                            </View>
+                        </View>
+                        <View style={styles.informationContainer}>
+
+                            <Text style={styles.fieldLabel}>Scenario</Text>
+                            <View style={styles.fieldContainer}>
+                                <TextInput style={styles.fieldTextInput}
+                                placeholder="Scenario"
+                                placeholderTextColor="#111"
+                                onEndEditing={(event) => {
+                                    setScenario(event.nativeEvent.text);
+                                    settings.header.usecase = event.nativeEvent.text;
+                                }} />
+                                <Pressable style={styles.infoButton}> <Text >Info</Text></Pressable>
+                            </View>
                         </View>
                     </View>
-                    <View style={styles.informationContainer}>
-                        
-                        <Text style={styles.fieldLabel}>Scenario</Text>
-                        <View style={styles.fieldContainer}>
-                            <TextInput style={styles.fieldTextInput} placeholder="Scenario" placeholderTextColor="#111" onChangeText={newScenario => setScenario(newScenario)}/>
-                            <Pressable style={styles.infoButton}> <Text >Info</Text></Pressable>
-                        </View>
+                </View>
+                <View style={styles.rightContainer}>
+                    <View style={styles.browserContainer}>
+                        <Text style={styles.fieldLabel}>Target Directory</Text>
+                        <Pressable style={styles.button}>
+                            <Text>browse</Text>
+                        </Pressable>
+                    </View>
+                    <View style={styles.configContainer}>
+                        <Text style={styles.fieldLabel}>Config</Text>
+                        <Pressable style={styles.button}>
+                            <Text>save</Text>
+                        </Pressable>
+                        <Pressable style={styles.button}>
+                            <Text>load</Text>
+                        </Pressable>
                     </View>
                 </View>
             </View>
-            <View style={styles.rightContainer}>
-                <View style={styles.browserContainer}>
-                    <Text style={styles.fieldLabel}>Target Directory</Text>
-                    <Pressable style={styles.button}>
-                        <Text>browse</Text>
-                    </Pressable>
-                </View>
-                <View style={styles.configContainer}>
-                    <Text style={styles.fieldLabel}>Config</Text>
-                    <Pressable style={styles.button}>
-                        <Text>save</Text>
-                    </Pressable>
-                    <Pressable style={styles.button}>
-                        <Text>load</Text>
-                    </Pressable>
-                </View>
-            </View>
-        </View>
         </View>
     );
 }
@@ -84,7 +106,7 @@ const styles = StyleSheet.create({
     navBarContainer: {
         flex: 0.2,
     },
-    mainContainer:{
+    mainContainer: {
         flex: 0.1,
         // flexDirection: 'column',
         backgroundColor: '#B3BEBE',
@@ -100,14 +122,14 @@ const styles = StyleSheet.create({
         // padding: 10,
     },
     centerContainer: {
-        flex:0.65,
+        flex: 0.65,
         // padding: 10,
         // backgroundColor: 'green',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    rightContainer:{
+    rightContainer: {
         flex: 0.35,
         // padding: 10,
         // backgroundColor: '#92b0b0',
@@ -115,7 +137,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    browserContainer:{
+    browserContainer: {
         flex: 0.2,
         padding: 10,
         flexDirection: 'column',
@@ -123,7 +145,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         // backgroundColor: 'yellow',
     },
-    configContainer:{
+    configContainer: {
         flex: 0.7,
         // padding: 10,
         flexDirection: 'column',
@@ -131,7 +153,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         // backgroundColor: 'orange',
     },
-    lognameContainer:{
+    lognameContainer: {
         flex: 0.1,
         // padding: 10,
         flexDirection: 'column',
@@ -139,14 +161,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         // backgroundColor: 'purple',
     },
-    informationsContainer:{
+    informationsContainer: {
         flex: 0.7,
         padding: 10,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    informationContainer:{
+    informationContainer: {
         // padding: 10,
         // backgroundColor: 'red',
         paddingBottom: 40,
@@ -154,7 +176,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
     },
-    labelContainer:{
+    labelContainer: {
         // padding: 10,
         // backgroundColor: 'blue',
         flexDirection: 'row',
@@ -162,14 +184,14 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
     },
-    fieldContainer:{
+    fieldContainer: {
         // padding: 10,
         // backgroundColor: 'green',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
     },
-    lognameText:{
+    lognameText: {
         color: '#000',
         fontSize: 15,
         fontFamily: 'inter',
@@ -177,13 +199,13 @@ const styles = StyleSheet.create({
         top: 0,
         // padding: 10,
     },
-    fieldLabel:{
+    fieldLabel: {
         color: '#000',
         fontSize: 15,
         fontFamily: 'inter',
         // padding: 10,
     },
-    fieldTextInput:{
+    fieldTextInput: {
         color: '#000',
         fontSize: 15,
         fontFamily: 'inter',
@@ -198,7 +220,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 20,
     },
-    infoButton:{
+    infoButton: {
         padding: 10,
         color: '#000',
         fontSize: 15,

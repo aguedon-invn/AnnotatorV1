@@ -2,9 +2,13 @@ import { Stack, Redirect } from "expo-router";
 import Header from "@/components/header";
 import NavBar from "@/components/navbar";
 import {StyleSheet} from "react-native";
+import {LogTimerProvider, AnnotationTimerProvider} from '@/components/timerContext';
+
 export default function RootLayout() {
   return (
   <>
+  <LogTimerProvider>
+  <AnnotationTimerProvider>
   <Stack >
     <Stack.Screen
       name="(tabs)"
@@ -17,6 +21,8 @@ export default function RootLayout() {
       }}
     />
   </Stack>
+  </AnnotationTimerProvider>
+  </LogTimerProvider>
   </>
   );
 }

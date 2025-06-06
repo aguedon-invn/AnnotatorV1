@@ -1,0 +1,41 @@
+{
+    "device_name" : "MyDevice",
+    "targetpath" : "C:\\Users\\aguedon\\git_repos\\Annotator\\AnnotatorV1\\output",
+    "tempLogPath" : "",
+    "header" : {
+        "version" : "0.1",
+        "date" : "2025-06-03_16h17m36s",
+        "baseName" : "test",
+        "usecase": "scenario1",
+        "multi" : false,
+        "flattened" : true
+    },
+    "user": {
+        "Id" : "user666",
+        "Name" : "John Doe",
+        "Sex" : "Male",
+        "Age" : 30,
+        "UnitPreference" : "Metric",
+        "Weight" : 75,
+        "Height" : 180,
+        "Handedness" : "Right"
+    },
+    "room" : {
+        "Id" : "room123",
+        "Name" : "Living Room",
+        "Size" : {
+            "Width" : 5.0,
+            "Length" : 4.0,
+            "Height" : 2.5
+        },
+        "FloorType" : "Wooden",
+        "LightingType" : "LED",
+        "AmbientLightLevel" : 300,
+        "Temperature" : 22,
+        "Humidity" : 45
+    },
+    "ManualAcquisition" :{
+        "nb_devices" : 9
+    }
+
+}
